@@ -26,4 +26,5 @@ class Skidsteer:
     def __calc_inst_radius(self, v_left: float, v_right: float) -> float:
         return (self.__width / 2) * ((v_right + v_left)/(v_right - v_left))
 
-        
+    def __repr__(self) -> str:
+        return f"Position: ({self.__x_pos, self.__y_pos}), Theta Dot: {self.__theta_dot}"
