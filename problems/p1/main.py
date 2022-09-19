@@ -39,7 +39,7 @@ for t in range(0, 100):
         print("Too far!")
         break
     coords.append((x_pos, y_pos, skidsteer.get_theta()))
-    skidsteer.move(get_v_left(t/10), 16, DELTA_TIME)
+    skidsteer.move(get_v_left(t/10)*.1, 16*.1, DELTA_TIME)
     
 
 plt.plot([x for (x,y,t) in coords], [y for (x,y,t) in coords])
