@@ -58,13 +58,25 @@ class Skidsteer:
     def calculate_turn_time(self, v_left: float, v_right: float, desired_relative_angle_radians: float) -> float:
         return desired_relative_angle_radians * self.__width / (v_right - v_left)
 
-    def move(self, v_left: float, v_right: float, dt: float) -> tuple[float, float, float, float]:
+    def move_time(self, v_left: float, v_right: float, dt: float) -> tuple[float, float, float, float]:
         "Returns (xpos, ypos, theta, dt)"
         self.set_x_new(v_left, v_right, dt)
         self.set_y_new(v_left, v_right, dt)
         self.set_theta_new(v_left, v_right, dt)
 
         return (self.__x_pos, self.__y_pos, self.__theta, dt)
+
+    def move_distance(self, v_left: float, v_right: float, dt: float, distance: float) -> tuple[float, float, float, float]:
+        whole_iters = int(abs(distance / ((v_left + v_right) / 2 * dt)))
+        remainder_iter = distance % (v_left + v_right) / 2 * dt
+        last_pos = None
+
+        for _ in range(int(whole_iters)):
+            last_post = self.move_time(v_left, v_right, dt)
+
+        last_pos = self.move_time(v_left, v_right, )
+
+        return last_pos
 
     def turn(self, v_left: float, v_right: float, desired_relative_angle_radians: float) -> tuple[float, float, float, float]:
         "Returns (xpos, ypos, theta, dt)"
@@ -88,6 +100,12 @@ class Skidsteer:
 
     def get_angular_velocity(self) -> float:
         pass
+
+    def get_length(self) -> float:
+        return self.__length
+
+    def get_width(self) -> float:
+        return self.__width
 
     def __repr__(self) -> str:
         return f"Position: ({self.__x_pos, self.__y_pos}), Theta Dot: {self.__theta}"
