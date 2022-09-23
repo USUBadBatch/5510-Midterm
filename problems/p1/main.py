@@ -1,3 +1,4 @@
+from os import access
 from skidsteer import Skidsteer
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,42 +9,31 @@ DELTA_TIME = .1
 CIRCLE_DIAMETER = 5 # in meters
 SKIDSTEER_LEN = .75 # in meters
 SKIDSTEER_WIDTH = .55 # still in meters
+CIRCLE_RADIUS = CIRCLE_DIAMETER / 2
 
-# this is the maximum distance that the center of the robot 
-# can get from the center of the circle. Anything more than this
-# and the robot is outside the circle.
-max_dist = (CIRCLE_DIAMETER / 2) - (SKIDSTEER_WIDTH / 2)
 
-skidsteer = Skidsteer(SKIDSTEER_LEN, SKIDSTEER_WIDTH)
-coords: list[tuple[float, float, float]] = []
 
-def get_v_left(elapsed_time: float):
-    return min(12, 2*elapsed_time)
+def main():
 
-def get_dist(x:float, y: float):
-    return math.sqrt(x*x + y*y)
+    skid = Skidsteer(SKIDSTEER_LEN, SKIDSTEER_WIDTH)
+    skid.reset()
 
-'''
-Variables needed:
-total_time = time duration 
-time_coeff = time coefficient
-max_v_left = maximum speed of left
-V_RIGHT = constant velocity of right tread
-'''
-# TODO look at Archimedean spiral 
+    coords: list[tuple[float, float]] = []
 
-for t in range(0, 100):
-    x_pos = skidsteer.get_xpos()
-    y_pos = skidsteer.get_ypos()
-    if get_dist(x_pos, y_pos) > max_dist:
-        print("Too far!")
-        break
-    coords.append((x_pos, y_pos, skidsteer.get_theta()))
-    skidsteer.move(get_v_left(t/10)*.1, 16*.1, DELTA_TIME)
+
+    (v_l, v_r) = skid.calc_inst_radius_velocitites(8, CIRCLE_RADIUS)
+
+    print(f"V_l: {v_l}, V_r: {v_r}, Desired Radius: {CIRCLE_RADIUS}, Actual Radius: {skid.calc_inst_radius_dist(v_l, v_r)}")
+
     
 
-plt.plot([x for (x,y,t) in coords], [y for (x,y,t) in coords])
-plt.xlabel("X")
-plt.ylabel("Y")
-plt.title("Trajectory of Robit in Cartesian Plane")
-plt.show()
+
+
+
+
+
+    # plt.plot([x for (x, y) in coords], [y for (x, y) in coords], "r")
+    # # plt.legend(loc="upper right")
+    # plt.show()
+
+main()

@@ -2,7 +2,7 @@ import math
 
 
 
-class Skidsteer:
+class Ackerman:
     def __init__(self, length: float, width: float) -> None:
         self.__length = length
         self.__width = width
@@ -39,10 +39,11 @@ class Skidsteer:
         "Returns (v_l, v_r)"
 
         ratio = self.calc_inst_radius_velocities_ratio(radius)
-        v_l = (-(avg_velocity * (1/2))/self.get_width()) + (((2 * (avg_velocity * (1/2))) * radius) / (self.get_width() ** 2))
+        v_l = (-4/self.get_width()) + ((8 * radius) / (self.get_width() ** 2))
         v_r = v_l * ratio
 
         return (v_l, v_r)
+
 
 
     def set_x_new(self, v_left: float, v_right: float, dt: float) -> float:

@@ -4,3 +4,4 @@
 .rar
 .7z
 bin/
+__pycache__/
