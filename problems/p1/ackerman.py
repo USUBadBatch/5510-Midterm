@@ -10,76 +10,60 @@ class Ackerman:
         self.__x_pos = 0
         self.__y_pos = 0
 
-        #theta in rad
-        self.__theta = 0
+        #psi in rad
+        self.__psi = 0
 
     
-    def calc_x_new(self, v_left: float, v_right: float, dt: float) -> float:
+    def calc_x_new(self, v_rear: float, dt: float) -> float:
         "Calculates and returns the new x position"
-        return self.__x_pos - (.5 * (v_left + v_right) * math.sin(self.__theta) * dt)
+        return self.__x_pos - (v_rear * math.sin(self.__psi) * dt)
 
-    def calc_y_new(self, v_left: float, v_right: float, dt: float) -> float:
+    def calc_y_new(self, v_rear: float, dt: float) -> float:
         "Calculatess and returns the new y position"
-        return self.__y_pos + (.5 * (v_left + v_right) * math.cos(self.__theta) * dt)
+        return self.__y_pos + (v_rear * math.cos(self.__psi) * dt)
 
-    def calc_theta_new(self, v_left: float, v_right: float, dt: float) -> float:
+    def calc_psi_new(self, v_rear: float, alpha: float, dt: float) -> float:
         "Calculates and returns the new theta"
-        return self.__theta + ((1/self.__width) * (v_right - v_left) * dt)
+        return self.__psi + ((1/self.__length) * v_rear * math.tan(alpha) * dt)
 
-    def calc_inst_radius_dist(self, v_left: float, v_right: float) -> float:
+    def calc_inst_radius_dist(self, alpha: float) -> float:
         "Calculates and returns the instantaneous turning radius"
-        return (self.__width / 2) * ((v_right + v_left)/(v_right - v_left))
+        return self.__ * (1/math.tan(alpha))
 
-    def calc_inst_radius_velocities_ratio(self, radius: float) -> float:
-        "Returns the ration of V_r/V_l"
-
-        return (1 + ((2 * radius) / self.__width)) / (-1 + ((2 * radius) / self.__width))
-
-    def calc_inst_radius_velocitites(self, avg_velocity: float, radius: float) -> tuple[float, float]:
-        "Returns (v_l, v_r)"
-
-        ratio = self.calc_inst_radius_velocities_ratio(radius)
-        v_l = (-4/self.get_width()) + ((8 * radius) / (self.get_width() ** 2))
-        v_r = v_l * ratio
-
-        return (v_l, v_r)
-
-
-
-    def set_x_new(self, v_left: float, v_right: float, dt: float) -> float:
+    def set_x_new(self, v_rear: float, dt: float) -> float:
         "Calculates then sets the current instances new x_pos then returns the new x position"
-        x_new = self.calc_x_new(v_left, v_right, dt)
+        x_new = self.calc_x_new(v_rear, dt)
         self.__x_pos = x_new
         return self.__x_pos
 
-    def set_y_new(self, v_left: float, v_right: float, dt: float) -> float:
+    def set_y_new(self, v_rear: float, dt: float) -> float:
         "Calculates then sets the current instances new y_pos then returns the new y position"
-        y_new = self.calc_y_new(v_left, v_right, dt)
+        y_new = self.calc_y_new(v_rear, dt)
         self.__y_pos = y_new
         return self.__y_pos
 
-    def set_theta_new(self, v_left: float, v_right: float, dt: float) -> float:
+    def set_psi_new(self, v_rear: float, alpha: float, dt: float) -> float:
         "Calculates then sets the current instances new theta then returns the new theta"
-        theta_new = self.calc_theta_new(v_left, v_right, dt)
-        self.__theta = theta_new
-        return self.__theta
+        theta_new = self.calc_psi_new(v_rear, alpha, dt)
+        self.__psi = theta_new
+        return self.__psi
 
-    def reset(self, x_pos: float = 0, y_pos: float = 0, theta: float = 0) -> None:
+    def reset(self, x_pos: float = 0, y_pos: float = 0, psi: float = 0) -> None:
         "Resets the skidsteers position"
         self.__x_pos = x_pos
         self.__y_pos = y_pos
-        self.__theta = theta
+        self.__psi = psi
 
-    def calculate_turn_time(self, v_left: float, v_right: float, desired_relative_angle_radians: float) -> float:
-        return desired_relative_angle_radians * self.__width / (v_right - v_left)
+    def calculate_turn_time(self, v_rear: float, alpha: float) -> float:
+        pass
 
-    def move_time(self, v_left: float, v_right: float, dt: float) -> tuple[float, float, float, float]:
+    def move_time(self, v_rear: float, alpha: float, dt: float) -> tuple[float, float, float, float]:
         "Returns (xpos, ypos, theta, dt)"
-        self.set_x_new(v_left, v_right, dt)
-        self.set_y_new(v_left, v_right, dt)
-        self.set_theta_new(v_left, v_right, dt)
+        self.set_x_new(v_rear, dt)
+        self.set_y_new(v_rear, dt)
+        self.set_psi_new(v_rear, alpha, dt)
 
-        return (self.__x_pos, self.__y_pos, self.__theta, dt)
+        return (self.__x_pos, self.__y_pos, self.__psi, dt)
 
     def move_distance(self, v_left: float, v_right: float, dt: float, distance: float) -> tuple[float, float, float, float]:
         whole_iters = int(abs(distance / ((v_left + v_right) / 2 * dt)))
@@ -101,7 +85,7 @@ class Ackerman:
         self.set_y_new(v_left, v_right, turn_time)
         self.set_theta_new(v_left, v_right, turn_time)
 
-        return (self.__x_pos, self.__y_pos, self.__theta, turn_time)
+        return (self.__x_pos, self.__y_pos, self.__psi, turn_time)
 
 
     def get_xpos(self) -> float:
@@ -110,11 +94,8 @@ class Ackerman:
     def get_ypos(self) -> float:
         return self.__y_pos
 
-    def get_theta(self) -> float:
-        return self.__theta
-
-    def get_angular_velocity(self) -> float:
-        pass
+    def get_psi(self) -> float:
+        return self.__psi
 
     def get_length(self) -> float:
         return self.__length
@@ -123,4 +104,4 @@ class Ackerman:
         return self.__width
 
     def __repr__(self) -> str:
-        return f"Position: ({self.__x_pos, self.__y_pos}), Theta Dot: {self.__theta}"
+        return f"Position: ({self.__x_pos, self.__y_pos}), Theta Dot: {self.__psi}"

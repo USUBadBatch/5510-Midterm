@@ -13,18 +13,27 @@ class Skidsteer:
         #theta in rad
         self.__theta = 0
 
-    
+
+    def calc_delta_x(self, v_left: float, v_right: float, dt: float) -> float:
+            return -(.5 * (v_left + v_right) * math.sin(self.__theta) * dt)
+
+    def calc_delta_y(self, v_left: float, v_right: float, dt: float) -> float:
+        return  (.5 * (v_left + v_right) * math.cos(self.__theta) * dt)
+
+    def calc_delta_theta(self, v_left: float, v_right: float, dt: float) -> float:
+        return ((1/self.__width) * (v_right - v_left) * dt)
+
     def calc_x_new(self, v_left: float, v_right: float, dt: float) -> float:
         "Calculates and returns the new x position"
-        return self.__x_pos - (.5 * (v_left + v_right) * math.sin(self.__theta) * dt)
+        return self.__x_pos + self.calc_delta_x(v_left, v_right, dt)
 
     def calc_y_new(self, v_left: float, v_right: float, dt: float) -> float:
         "Calculatess and returns the new y position"
-        return self.__y_pos + (.5 * (v_left + v_right) * math.cos(self.__theta) * dt)
+        return self.__y_pos + self.calc_delta_y(v_left, v_right, dt)
 
     def calc_theta_new(self, v_left: float, v_right: float, dt: float) -> float:
         "Calculates and returns the new theta"
-        return self.__theta + ((1/self.__width) * (v_right - v_left) * dt)
+        return self.__theta + self.calc_delta_theta(v_left, v_right, dt)
 
     def calc_inst_radius_dist(self, v_left: float, v_right: float) -> float:
         "Calculates and returns the instantaneous turning radius"
@@ -35,12 +44,14 @@ class Skidsteer:
 
         return (1 + ((2 * radius) / self.__width)) / (-1 + ((2 * radius) / self.__width))
 
-    def calc_inst_radius_velocitites(self, avg_velocity: float, radius: float) -> tuple[float, float]:
+    def calc_inst_radius_velocities(self, avg_velocity: float, radius: float) -> tuple[float, float]:
         "Returns (v_l, v_r)"
 
         ratio = self.calc_inst_radius_velocities_ratio(radius)
-        v_l = (-(avg_velocity * (1/2))/self.get_width()) + (((2 * (avg_velocity * (1/2))) * radius) / (self.get_width() ** 2))
-        v_r = v_l * ratio
+
+        v_l = -2 * avg_velocity * (self.__width - 2 * radius) / (4 * radius)
+        
+        v_r = 2 * avg_velocity - v_l
 
         return (v_l, v_r)
 
@@ -102,6 +113,21 @@ class Skidsteer:
 
         return (self.__x_pos, self.__y_pos, self.__theta, turn_time)
 
+    def calc_turning_left_clamped_velocities(self, avg_velocity: float, radius: float, final_total_dt: float, curr_total_dt: float) -> tuple[float, float]:
+        final_v_l, final_v_r = self.calc_inst_radius_velocities(avg_velocity, radius)
+
+        v_l = (curr_total_dt / final_total_dt) * final_v_l 
+        v_r = (curr_total_dt / final_total_dt) * final_v_r 
+        diff = ((avg_velocity * 2) - (v_l + v_r))
+
+        v_r += diff
+
+
+        print(f"Clamped v_l: {v_l}, Clamped v_r: {v_r}, Total: {v_l + v_r}")
+
+        return (v_l, v_r)
+
+
 
     def get_xpos(self) -> float:
         return self.__x_pos
@@ -112,8 +138,8 @@ class Skidsteer:
     def get_theta(self) -> float:
         return self.__theta
 
-    def get_angular_velocity(self) -> float:
-        pass
+    def calc_angular_velocity(self, v_left: float, v_right: float, dt: float) -> float:
+        return self.calc_delta_theta(v_left, v_right, dt) / dt
 
     def get_length(self) -> float:
         return self.__length
