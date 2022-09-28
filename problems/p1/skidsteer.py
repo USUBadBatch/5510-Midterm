@@ -91,17 +91,17 @@ class Skidsteer:
 
         return (self.__x_pos, self.__y_pos, self.__theta, dt)
 
-    def move_distance(self, v_left: float, v_right: float, dt: float, distance: float) -> tuple[float, float, float, float]:
-        whole_iters = int(abs(distance / ((v_left + v_right) / 2 * dt)))
-        remainder_iter = distance % (v_left + v_right) / 2 * dt
-        last_pos = None
+    # def move_distance(self, v_left: float, v_right: float, dt: float, distance: float) -> tuple[float, float, float, float]:
+    #     whole_iters = int(abs(distance / ((v_left + v_right) / 2 * dt)))
+    #     remainder_iter = distance % (v_left + v_right) / 2 * dt
+    #     last_pos = None
 
-        for _ in range(int(whole_iters)):
-            last_post = self.move_time(v_left, v_right, dt)
+    #     for _ in range(int(whole_iters)):
+    #         last_post = self.move_time(v_left, v_right, dt)
 
-        last_pos = self.move_time(v_left, v_right, )
+    #     last_pos = self.move_time(v_left, v_right, )
 
-        return last_pos
+    #     return last_pos
 
     def turn(self, v_left: float, v_right: float, desired_relative_angle_radians: float) -> tuple[float, float, float, float]:
         "Returns (xpos, ypos, theta, dt)"
@@ -115,6 +115,7 @@ class Skidsteer:
 
     def calc_turning_left_clamped_velocities(self, avg_velocity: float, radius: float, final_total_dt: float, curr_total_dt: float) -> tuple[float, float]:
         final_v_l, final_v_r = self.calc_inst_radius_velocities(avg_velocity, radius)
+        # print(f"Inital VL,VR ({final_v_l, final_v_r}) ->", end="")
 
         v_l = (curr_total_dt / final_total_dt) * final_v_l 
         v_r = (curr_total_dt / final_total_dt) * final_v_r 
@@ -123,11 +124,25 @@ class Skidsteer:
         v_r += diff
 
 
-        print(f"Clamped v_l: {v_l}, Clamped v_r: {v_r}, Total: {v_l + v_r}")
+        # print(f"Clamped v_l: {v_l}, Clamped v_r: {v_r}, Total: {v_l + v_r}")
 
         return (v_l, v_r)
 
+    def get_next_pos(self, v_left: float, v_right: float, dt: float) -> tuple[float, float, float, float]:
+        tmp : Skidsteer = self.clone()
+        
+        tmp.set_x_new(v_left, v_right, dt)
+        tmp.set_y_new(v_left, v_right, dt)
+        tmp.set_theta_new(v_left, v_right, dt)
 
+        return (tmp.__x_pos, tmp.__y_pos, tmp.__theta, dt)
+
+    def clone(self) -> 'Skidsteer':
+        tmp = Skidsteer(self.__length, self.__width)
+        tmp.__x_pos = self.__x_pos
+        tmp.__y_pos = self.__y_pos
+        tmp.__theta = self.__theta
+        return tmp
 
     def get_xpos(self) -> float:
         return self.__x_pos
@@ -137,6 +152,18 @@ class Skidsteer:
 
     def get_theta(self) -> float:
         return self.__theta
+
+    def set_xpos(self, x_pos):
+        self.__x_pos = x_pos
+
+    def set_ypos(self, y_pos):
+        self.__y_pos = y_pos
+
+    def set_theta(self, theta):
+        self.__theta = theta
+
+    def incriment_theta(self, delta_theta):
+        self.__theta += delta_theta
 
     def calc_angular_velocity(self, v_left: float, v_right: float, dt: float) -> float:
         return self.calc_delta_theta(v_left, v_right, dt) / dt
