@@ -8,11 +8,11 @@ def distance(p1: tuple[float, float], p2: tuple[float, float]) -> float:
     return math.sqrt((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2)
 
 
-def law_of_cos(a,b,c):
+def law_of_cos(a: float, b: float,c: float) -> float:
     return math.acos((a ** 2 + b **2 - c**2) * (1/(2 * a * b)))
 
 class Circle:
-    def __init__(self, radius, x, y) -> None:
+    def __init__(self, radius: float, x: float, y: float) -> None:
         self.__radius = radius
         self.__x = x
         self.__y = y
