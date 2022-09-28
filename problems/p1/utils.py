@@ -19,6 +19,7 @@ class Circle:
 
     @staticmethod
     def find_intersection_points(c1: 'Circle', c2: 'Circle') -> tuple[tuple[float, float], tuple[float, float]]:
+        #https://math.stackexchange.com/questions/256100/how-can-i-find-the-points-at-which-two-circles-intersect
         x1 = c1.__x
         x2 = c2.__x
 

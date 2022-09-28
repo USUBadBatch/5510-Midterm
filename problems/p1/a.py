@@ -5,24 +5,19 @@ from utils import distance, law_of_cos, Circle
 import math
 
 
-DELTA_TIME = .1
-CIRCLE_DIAMETER = 5 # in meters
-SKIDSTEER_LEN = .75 # in meters
-SKIDSTEER_WIDTH = .55 # still in meters
-CIRCLE_RADIUS = CIRCLE_DIAMETER / 2
-AVERAGE_VELOCITY = 8
-CIRCLE_X, CIRCLE_Y = (0,0)
-
-
-
-
+DELTA_TIME = .1 #s
+CIRCLE_DIAMETER = 5 #m
+SKIDSTEER_LEN = .75 #m
+SKIDSTEER_WIDTH = .55 #m
+CIRCLE_RADIUS = CIRCLE_DIAMETER / 2 #m
+AVERAGE_VELOCITY = 8 #m/s
+CIRCLE_X, CIRCLE_Y = (0,0) 
 
 
 
 def main():
 
     skid = Skidsteer(SKIDSTEER_LEN, SKIDSTEER_WIDTH)
-    # skid.reset(x_pos = -.6, y_pos = 2.3)
     skid.reset()
 
 
