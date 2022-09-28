@@ -128,7 +128,7 @@ class Skidsteer:
 
         return (v_l, v_r)
 
-    def get_next_pos(self, v_left: float, v_right: float, dt: float) -> tuple[float, float, float, float]:
+    def calc_next_pos(self, v_left: float, v_right: float, dt: float) -> tuple[float, float, float, float]:
         tmp : Skidsteer = self.clone()
         
         tmp.set_x_new(v_left, v_right, dt)

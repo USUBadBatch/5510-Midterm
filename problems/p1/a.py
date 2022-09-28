@@ -33,7 +33,7 @@ def main():
         vl, vr = skid.calc_turning_left_clamped_velocities(AVERAGE_VELOCITY, CIRCLE_RADIUS, 1, i)
 
 
-        next_pos = skid.get_next_pos(vl, vr, DELTA_TIME)
+        next_pos = skid.calc_next_pos(vl, vr, DELTA_TIME)
         if distance((next_pos[0], next_pos[1]), (CIRCLE_X, CIRCLE_Y)) > CIRCLE_RADIUS:
             break
         else:
@@ -64,26 +64,31 @@ def main():
     skid.move_time(AVERAGE_VELOCITY, AVERAGE_VELOCITY, DELTA_TIME)
     coords.append((skid.get_xpos(), skid.get_ypos()))
 
-    print(f"Skid pos: ({skid.get_xpos(), skid.get_ypos()}), Distance from circle center: {distance((skid.get_xpos(), skid.get_ypos()), (CIRCLE_X, CIRCLE_Y))}")
+    plt.plot([CIRCLE_X, skid.get_xpos()], [CIRCLE_Y, skid.get_ypos()], "g")
 
 
     #go around circle
     #first set initial heading to align with circle
     #should be pi / 2 + angle out our pos to the center
-    a1 = math.atan(skid.get_xpos() / skid.get_ypos())
+    a1 = math.atan(skid.get_ypos() / skid.get_xpos())
+    # a1 += math.pi / 2
     # a2 = math.pi / 2
-    a2 = 0
-    a_new = a1 + a2
+    # a2 = 0
+    a_new = a1 
     skid.set_theta(a_new)
-    #fixme: this do be broken
-    #fixmen get the right initial heading
+
+
+    plt.plot([skid.get_xpos(), skid.calc_next_pos(AVERAGE_VELOCITY, AVERAGE_VELOCITY, DELTA_TIME)[0]], [skid.get_ypos(),skid.calc_next_pos(AVERAGE_VELOCITY, AVERAGE_VELOCITY, DELTA_TIME)[1]], "g")
+
+    vl, vr = skid.calc_inst_radius_velocities(AVERAGE_VELOCITY, CIRCLE_RADIUS)
+    #fixme: robit circle is still offset somehow
     for i in range(int((2 * math.pi * CIRCLE_RADIUS) / (AVERAGE_VELOCITY * DELTA_TIME))):
-        vl, vr = skid.calc_inst_radius_velocities(AVERAGE_VELOCITY, CIRCLE_RADIUS)
+        print(f"Skid pos: ({skid.get_xpos(): >20.15f}, {skid.get_ypos():>20.15f}), Distance from circle center: {distance((skid.get_xpos(), skid.get_ypos()), (CIRCLE_X, CIRCLE_Y)):<.15f}")
         skid.set_theta_new(vl ,vr, DELTA_TIME)
         skid.set_x_new(vl ,vr, DELTA_TIME)
         skid.set_y_new(vl ,vr, DELTA_TIME)
+        # skid.move_time(vl ,vr, DELTA_TIME)
         coords.append((skid.get_xpos(), skid.get_ypos()))
-        print(f"Skid pos: ({skid.get_xpos(), skid.get_ypos()}), Distance from circle center: {distance((skid.get_xpos(), skid.get_ypos()), (CIRCLE_X, CIRCLE_Y))}")
 
 
 
@@ -92,7 +97,8 @@ def main():
 
 
     plt.plot([x for (x, y) in coords], [y for (x, y) in coords], "r")
-    circle_main = plt.Circle((CIRCLE_X, CIRCLE_Y), CIRCLE_RADIUS, color='r', fill=False)
+    plt.scatter(CIRCLE_X, CIRCLE_Y, color="blue")
+    circle_main = plt.Circle((CIRCLE_X, CIRCLE_Y), CIRCLE_RADIUS, color='b', fill=False)
     plt.gca().add_patch(circle_main)
     # # plt.legend(loc="upper right")
     plt.show()
