@@ -68,10 +68,20 @@ def main():
 
 
     #go around circle
+    #first set initial heading to align with circle
+    #should be pi / 2 + angle out our pos to the center
+    a1 = math.atan(skid.get_xpos() / skid.get_ypos())
+    # a2 = math.pi / 2
+    a2 = 0
+    a_new = a1 + a2
+    skid.set_theta(a_new)
     #fixme: this do be broken
+    #fixmen get the right initial heading
     for i in range(int((2 * math.pi * CIRCLE_RADIUS) / (AVERAGE_VELOCITY * DELTA_TIME))):
         vl, vr = skid.calc_inst_radius_velocities(AVERAGE_VELOCITY, CIRCLE_RADIUS)
-        skid.move_time(vl ,vr, DELTA_TIME)
+        skid.set_theta_new(vl ,vr, DELTA_TIME)
+        skid.set_x_new(vl ,vr, DELTA_TIME)
+        skid.set_y_new(vl ,vr, DELTA_TIME)
         coords.append((skid.get_xpos(), skid.get_ypos()))
         print(f"Skid pos: ({skid.get_xpos(), skid.get_ypos()}), Distance from circle center: {distance((skid.get_xpos(), skid.get_ypos()), (CIRCLE_X, CIRCLE_Y))}")
 
@@ -82,6 +92,8 @@ def main():
 
 
     plt.plot([x for (x, y) in coords], [y for (x, y) in coords], "r")
+    circle_main = plt.Circle((CIRCLE_X, CIRCLE_Y), CIRCLE_RADIUS, color='r', fill=False)
+    plt.gca().add_patch(circle_main)
     # # plt.legend(loc="upper right")
     plt.show()
 
