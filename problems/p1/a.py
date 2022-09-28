@@ -60,7 +60,7 @@ def main():
     delta_theta = law_of_cos(distance(curr_point, next_point), distance(curr_point, solution), distance(solution, next_point))
 
     #move to edge of circle
-    skid.incriment_theta(delta_theta)
+    skid.increment_theta(delta_theta)
     skid.move_time(AVERAGE_VELOCITY, AVERAGE_VELOCITY, DELTA_TIME)
     coords.append((skid.get_xpos(), skid.get_ypos()))
 

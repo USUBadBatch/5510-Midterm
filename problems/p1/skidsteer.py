@@ -162,7 +162,7 @@ class Skidsteer:
     def set_theta(self, theta):
         self.__theta = theta
 
-    def incriment_theta(self, delta_theta):
+    def increment_theta(self, delta_theta):
         self.__theta += delta_theta
 
     def calc_angular_velocity(self, v_left: float, v_right: float, dt: float) -> float:
