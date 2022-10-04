@@ -106,9 +106,9 @@ class Ackermann:
 
     def calc_next_pos(self, velocity: float, alpha: float, dt: float):
         tmp = self.clone()
+        tmp.set_theta_new(velocity, alpha, dt)
         tmp.set_x_new(velocity, dt)
         tmp.set_y_new(velocity, dt)
-        tmp.set_theta_new(velocity, alpha, dt)
 
         return (tmp.__x_pos, tmp.__y_pos, tmp.__theta, dt)
 

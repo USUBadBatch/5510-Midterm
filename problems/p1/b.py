@@ -28,8 +28,18 @@ def main():
     car.move(AVERAGE_VELOCITY, math.pi / 4, DELTA_TIME)
     coords.append((car.get_xpos(), car.get_ypos()))
 
-    car.move(AVERAGE_VELOCITY, 0, DELTA_TIME)
+    car.move(AVERAGE_VELOCITY, math.pi / 5, DELTA_TIME)
     coords.append((car.get_xpos(), car.get_ypos()))
+
+    car.move(AVERAGE_VELOCITY, math.pi / 6, DELTA_TIME)
+    coords.append((car.get_xpos(), car.get_ypos()))
+
+    car.move(AVERAGE_VELOCITY, math.pi / 7, DELTA_TIME)
+    coords.append((car.get_xpos(), car.get_ypos()))
+    
+    car.move(AVERAGE_VELOCITY, math.pi / 8, DELTA_TIME)
+    coords.append((car.get_xpos(), car.get_ypos()))
+
 
 
 
