@@ -46,8 +46,8 @@ def main():
         i += DELTA_TIME
 
     #calc point on circle
-    next_point = (next_pos[0], next_pos[1])
-    curr_point = (skid.get_xpos(), skid.get_ypos())
+    next_point: tuple[float, float] = (next_pos[0], next_pos[1])
+    curr_point: tuple[float, float] = (skid.get_xpos(), skid.get_ypos())
 
     possible_solutions = Circle.find_intersection_points(Circle(CIRCLE_RADIUS, CIRCLE_X, CIRCLE_Y), Circle(AVERAGE_VELOCITY * DELTA_TIME, curr_point[0], curr_point[1]))
     ps1_distance = distance(next_point, possible_solutions[0])
