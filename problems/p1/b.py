@@ -25,10 +25,17 @@ def main():
     coords.append((car.get_xpos(), car.get_ypos()))
 
 
-    
-    for i in range(3, 15):
-        print(f"alpha: {math.pi / i}")
-        car.move(AVERAGE_VELOCITY, math.pi / i, DELTA_TIME)
+    count = 3
+    while True:
+        alpha = math.pi / count
+        print(f"alpha: {math.pi / count}")
+        count += 1
+        next_pos = car.calc_next_pos(AVERAGE_VELOCITY, alpha, DELTA_TIME)
+
+        if distance((next_pos[0], next_pos[1]), (CIRCLE_X, CIRCLE_Y)) > CIRCLE_RADIUS:
+            break
+        else:
+            car.move(AVERAGE_VELOCITY, alpha, DELTA_TIME)
         coords.append((car.get_xpos(), car.get_ypos()))
 
     
