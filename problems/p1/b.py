@@ -58,8 +58,8 @@ def main():
     # coords.append((car.get_xpos(), car.get_ypos()))
     plt.scatter(*solution, color="blue")
     plt.plot([curr_point[0], next_point[0]], [curr_point[1], next_point[1]], color="green")
-    dx = 0.8 * math.cos(car.get_theta() + math.pi)
-    dy = 0.8 * math.sin(car.get_theta() + math.pi)
+    dx = 0.8 * math.cos(car.get_theta() + delta_theta)
+    dy = 0.8 * math.sin(car.get_theta() + delta_theta)
     print(f"Theta: {car.get_theta()}\nDelta Theta: {delta_theta}\nDelta X: {dx}\nDelta Y: {dy}")
     plt.plot([curr_point[0], curr_point[0] - dx], [curr_point[1], curr_point[1] + dy], color="green")
 
