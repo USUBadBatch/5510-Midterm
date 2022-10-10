@@ -40,4 +40,4 @@ class Circle:
         s2 = (r1**2 - r2**2) / (2 * R ** 2)
         s3 = (1/2) * math.sqrt((2 * (r1 ** 2 + r2 ** 2) / (R ** 2)) - (((r1 ** 2 - r2 ** 2) ** 2) / (R ** 4)) - 1)
 
-        return ((s1 * p1) + (s2 * p2) + (s3 * p3), (s1 * p1) + (s2 * p2) - (s3 * p3))
+        return ((s1 * p1) + (s2 * p2) + (s3 * p3), (s1 * p1) + (s2 * p2) - (s3 * p3))  # type: ignore
