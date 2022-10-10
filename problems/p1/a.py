@@ -126,7 +126,7 @@ def main():
     plt.plot([x for (x, y) in coords], [y for (x, y) in coords], color="red")
     # plt.plot([x for (x, y) in coords2], [y for (x, y) in coords2], color="orange")
     plt.scatter(CIRCLE_X, CIRCLE_Y, color="blue")
-    circle_main = plt.Circle((CIRCLE_X, CIRCLE_Y), CIRCLE_RADIUS, color='b', fill=False)
+    circle_main = plt.Circle((CIRCLE_X, CIRCLE_Y), CIRCLE_RADIUS, color='b', fill=False)  # type: ignore
     plt.gca().add_patch(circle_main)
     # # plt.legend(loc="upper right")
     plt.gca().set_aspect("equal")

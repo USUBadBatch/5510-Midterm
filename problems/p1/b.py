@@ -21,35 +21,22 @@ def main():
 
     coords: list[tuple[float, float]] = []
     coords.append((car.get_xpos(), car.get_ypos()))
-
     car.move(AVERAGE_VELOCITY, 0, DELTA_TIME)
     coords.append((car.get_xpos(), car.get_ypos()))
 
-    car.move(AVERAGE_VELOCITY, math.pi / 4, DELTA_TIME)
-    coords.append((car.get_xpos(), car.get_ypos()))
 
-    car.move(AVERAGE_VELOCITY, math.pi / 5, DELTA_TIME)
-    coords.append((car.get_xpos(), car.get_ypos()))
-
-    car.move(AVERAGE_VELOCITY, math.pi / 6, DELTA_TIME)
-    coords.append((car.get_xpos(), car.get_ypos()))
-
-    car.move(AVERAGE_VELOCITY, math.pi / 7, DELTA_TIME)
-    coords.append((car.get_xpos(), car.get_ypos()))
     
-    car.move(AVERAGE_VELOCITY, math.pi / 8, DELTA_TIME)
-    coords.append((car.get_xpos(), car.get_ypos()))
-
-
-
-
+    for i in range(3, 15):
+        print(f"alpha: {math.pi / i}")
+        car.move(AVERAGE_VELOCITY, math.pi / i, DELTA_TIME)
+        coords.append((car.get_xpos(), car.get_ypos()))
 
     
 
     plt.plot([x for (x, y) in coords], [y for (x, y) in coords], color="red")
     # plt.plot([x for (x, y) in coords2], [y for (x, y) in coords2], color="orange")
     plt.scatter(CIRCLE_X, CIRCLE_Y, color="blue")
-    circle_main = plt.Circle((CIRCLE_X, CIRCLE_Y), CIRCLE_RADIUS, color='b', fill=False)
+    circle_main = plt.Circle((CIRCLE_X, CIRCLE_Y), CIRCLE_RADIUS, color='b', fill=False)  # type: ignore
     plt.gca().add_patch(circle_main)
     # # plt.legend(loc="upper right")
     plt.gca().set_aspect("equal")
