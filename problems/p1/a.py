@@ -46,8 +46,8 @@ def main():
         i += DELTA_TIME
 
     #calc point on circle
-    next_point = (next_pos[0], next_pos[1])
-    curr_point = (skid.get_xpos(), skid.get_ypos())
+    next_point: tuple[float, float] = (next_pos[0], next_pos[1])
+    curr_point: tuple[float, float] = (skid.get_xpos(), skid.get_ypos())
 
     possible_solutions = Circle.find_intersection_points(Circle(CIRCLE_RADIUS, CIRCLE_X, CIRCLE_Y), Circle(AVERAGE_VELOCITY * DELTA_TIME, curr_point[0], curr_point[1]))
     ps1_distance = distance(next_point, possible_solutions[0])
@@ -126,7 +126,7 @@ def main():
     plt.plot([x for (x, y) in coords], [y for (x, y) in coords], color="red")
     # plt.plot([x for (x, y) in coords2], [y for (x, y) in coords2], color="orange")
     plt.scatter(CIRCLE_X, CIRCLE_Y, color="blue")
-    circle_main = plt.Circle((CIRCLE_X, CIRCLE_Y), CIRCLE_RADIUS, color='b', fill=False)
+    circle_main = plt.Circle((CIRCLE_X, CIRCLE_Y), CIRCLE_RADIUS, color='b', fill=False)  # type: ignore
     plt.gca().add_patch(circle_main)
     # # plt.legend(loc="upper right")
     plt.gca().set_aspect("equal")
