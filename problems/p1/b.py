@@ -26,9 +26,9 @@ def main():
 
     next_pos = None
 
-    count = 3
+    count = 0
     while True:
-        alpha = math.pi / count
+        alpha: float = (math.pi / 2.5) - (DELTA_TIME * count)
         # print(f"alpha: {math.pi / count}")
         count += 1
         next_pos = car.calc_next_pos(AVERAGE_VELOCITY, alpha, DELTA_TIME)
