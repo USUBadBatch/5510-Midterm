@@ -120,4 +120,4 @@ class Ackermann:
         return (self.__x_pos, self.__y_pos, self.__theta, dt)
 
     def __repr__(self) -> str:
-        return f"Position: ({self.__x_pos, self.__y_pos}), Theta Dot: {self.__theta}"
+        return f"Position: {self.__x_pos, self.__y_pos}, Theta : {self.__theta}"
