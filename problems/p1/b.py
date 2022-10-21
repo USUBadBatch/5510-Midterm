@@ -16,20 +16,27 @@ CIRCLE_X, CIRCLE_Y = (0,0)
 
 
 def main():
+    global DELTA_TIME
     car = Ackermann(ACKERMANN_LEN, ACKERMANN_WIDTH)
     car.reset()
 
     coords: list[tuple[float, float]] = []
     coords.append((car.get_xpos(), car.get_ypos()))
+    print(car)
+
     car.move(AVERAGE_VELOCITY, 0, DELTA_TIME)
     coords.append((car.get_xpos(), car.get_ypos()))
-
+    print(car)
+    
+    
     next_pos = None
-
     count = 0
+    alpha = 0
     while True:
         alpha: float = (math.pi / 2.5) - (DELTA_TIME * count)
-        # print(f"alpha: {math.pi / count}")
+        print(f"alpha: {(math.pi / 2.5) - (DELTA_TIME * count)}")
+
+
         count += 1
         next_pos = car.calc_next_pos(AVERAGE_VELOCITY, alpha, DELTA_TIME)
 
@@ -37,10 +44,17 @@ def main():
             break
         else:
             car.move(AVERAGE_VELOCITY, alpha, DELTA_TIME)
+            print(car)
+
         coords.append((car.get_xpos(), car.get_ypos()))
 
     next_point = (next_pos[0], next_pos[1])
     curr_point = (car.get_xpos(), car.get_ypos())
+
+    circle_cur = plt.Circle((curr_point), .8, fill=False) #type: ignore
+
+
+
     possible_solutions = Circle.find_intersection_points(Circle(CIRCLE_RADIUS, CIRCLE_X, CIRCLE_Y), Circle(AVERAGE_VELOCITY * DELTA_TIME, curr_point[0], curr_point[1]))
     ps1_distance = distance(next_point, possible_solutions[0])
     ps2_distance = distance(next_point, possible_solutions[1])
@@ -53,26 +67,22 @@ def main():
 
     #use law of cos to find new delta theta
     delta_theta = law_of_cos(distance(curr_point, next_point), distance(curr_point, solution), distance(solution, next_point))
-    # car.increment_theta(delta_theta)
-    # car.move(AVERAGE_VELOCITY, delta_theta, DELTA_TIME)
-    # coords.append((car.get_xpos(), car.get_ypos()))
-    plt.scatter(*solution, color="blue")
-    plt.plot([curr_point[0], next_point[0]], [curr_point[1], next_point[1]], color="green")
-    dx = 0.8 * math.cos(car.get_theta() + delta_theta)
-    dy = 0.8 * math.sin(car.get_theta() + delta_theta)
-    print(f"Theta: {car.get_theta()}\nDelta Theta: {delta_theta}\nDelta X: {dx}\nDelta Y: {dy}")
-    plt.plot([curr_point[0], curr_point[0] - dx], [curr_point[1], curr_point[1] + dy], color="green")
+    car.increment_theta(delta_theta  + car.calc_delta_theta(AVERAGE_VELOCITY, alpha) * DELTA_TIME)
 
-    
+    car.move(AVERAGE_VELOCITY, 0, DELTA_TIME)
+    coords.append((car.get_xpos(), car.get_ypos()))
+    # ncurrpoint = car.calc_next_pos(AVERAGE_VELOCITY, 0, DELTA_TIME)
+    # plt.plot([curr_point[0], ncurrpoint[0]], [curr_point[1], ncurrpoint[1]], color="yellow")
+
 
     plt.plot([x for (x, y) in coords], [y for (x, y) in coords], color="red")
-    # plt.plot([x for (x, y) in coords2], [y for (x, y) in coords2], color="orange")
     plt.scatter(CIRCLE_X, CIRCLE_Y, color="blue")
     circle_main = plt.Circle((CIRCLE_X, CIRCLE_Y), CIRCLE_RADIUS, color='b', fill=False)  # type: ignore
     plt.gca().add_patch(circle_main)
-    # # plt.legend(loc="upper right")
+    plt.gca().add_patch(circle_cur)
     plt.gca().set_aspect("equal")
     plt.show()
+
 
 
 main()
