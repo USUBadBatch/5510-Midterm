@@ -100,9 +100,7 @@ def main():
     dtheta = skid.calc_delta_theta(vl ,vr, DELTA_TIME)
     skid.increment_theta(-dtheta / 2)
 
-    #fixme: robit circle is still offset somehow
     for i in range(int((2 * math.pi * CIRCLE_RADIUS) / (AVERAGE_VELOCITY * DELTA_TIME)) + 1):
-        print(f"Skid pos: ({skid.get_xpos(): >20.15f}, {skid.get_ypos():>20.15f}), Distance from circle center: {distance((skid.get_xpos(), skid.get_ypos()), (CIRCLE_X, CIRCLE_Y)):<.15f}")
         
         skid.set_theta_new(vl ,vr, DELTA_TIME)
         skid.set_x_new(vl ,vr, DELTA_TIME)

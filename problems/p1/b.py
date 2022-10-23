@@ -67,12 +67,27 @@ def main():
 
     #use law of cos to find new delta theta
     delta_theta = law_of_cos(distance(curr_point, next_point), distance(curr_point, solution), distance(solution, next_point))
-    car.increment_theta(delta_theta  + car.calc_delta_theta(AVERAGE_VELOCITY, alpha) * DELTA_TIME)
+    car.increment_theta(delta_theta + car.calc_delta_theta(AVERAGE_VELOCITY, alpha) * DELTA_TIME)
 
     car.move(AVERAGE_VELOCITY, 0, DELTA_TIME)
     coords.append((car.get_xpos(), car.get_ypos()))
-    # ncurrpoint = car.calc_next_pos(AVERAGE_VELOCITY, 0, DELTA_TIME)
-    # plt.plot([curr_point[0], ncurrpoint[0]], [curr_point[1], ncurrpoint[1]], color="yellow")
+
+
+    #todo: set heading
+    #todo: fix this is broken
+    a_new = math.atan(car.get_ypos() / car.get_xpos()) + math.pi
+    a_old = car.get_theta()
+    a_new1 = (a_new - a_old) / 2
+    car.increment_theta(a_new1)
+
+
+
+    alpha = car.calc_alpha_for_inst_turning_raidus(2.5)
+    for i in range(int((2 * math.pi * CIRCLE_RADIUS) / (AVERAGE_VELOCITY * DELTA_TIME)) + 1):
+        car.move(AVERAGE_VELOCITY, alpha, DELTA_TIME)
+
+
+        coords.append((car.get_xpos(), car.get_ypos()))
 
 
     plt.plot([x for (x, y) in coords], [y for (x, y) in coords], color="red")
