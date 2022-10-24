@@ -1,7 +1,6 @@
 import math
 from utils import distance, Circle, law_of_cos
 import matplotlib.pyplot as plt
-import numpy as np
 
 from ackermann import Ackermann
 
