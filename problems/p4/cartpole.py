@@ -8,6 +8,7 @@ import math
 import gym
 from gym import spaces, logger
 from gym.utils import seeding
+from gym.envs.registration import register
 import numpy as np
 
 
@@ -60,7 +61,7 @@ class CartPoleEnv(gym.Env):
         self.total_mass = self.pole_mass + self.cart_mass
         self.length = pole_length / 2  # actually half the pole's length
         self.pole_mass_length = self.pole_mass * self.length
-        self.force_mag = 10.0
+        self.force_mag = 6.0
         self.tau = 0.02  # seconds between state updates
         self.kinematics_integrator = "euler"
 
@@ -225,3 +226,10 @@ class CartPoleEnv(gym.Env):
         if self.viewer:
             self.viewer.close()
             self.viewer = None
+            
+register(
+    id='cartpole/CartPole-v0',
+    entry_point='cartpole.envs:CartPoleEnv',
+    max_episode_steps=300,
+)
+            
