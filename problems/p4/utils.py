@@ -1,19 +1,22 @@
-from collections import deque, namedtuple
+from collections import deque
 import random
 import numpy as np
+import math
 
 import torch
 import torchvision
 from PIL import Image
 
-Transition = namedtuple('Transition', ('state', 'action', 'next_state', 'reward'))
+EPS_START = 0.9
+EPS_END = 0.05
+EPS_DECAY = 200
 
 class ReplayMemory(object):
     def __init__(self, capacity):
         self.memory = deque([], maxlen=capacity)
 
-    def push(self, *args):
-        self.memory.append(Transition(*args))
+    def push(self, transition, *args):
+        self.memory.append(transition(*args))
 
     def sample(self, batch_size):
         return random.sample(self.memory, batch_size)
@@ -54,3 +57,13 @@ def get_screen(env):
     screen = torch.from_numpy(screen)
     # Resize, and add a batch dimension (BCHW)
     return resize(screen).unsqueeze(0)
+
+def select_action(state, steps_done, policy_net, n_actions):
+    sample = random.random()
+    eps_threshold = EPS_END + (EPS_START - EPS_END) * math.exp(-1. * steps_done / EPS_DECAY)
+    step_done += 1
+    if sample > eps_threshold:
+        with torch.no_grad():
+            return policy_net(state).max(1)[1].view(1, 1)
+    else:
+        return torch.tensor([random.randrange(n_actions)])
