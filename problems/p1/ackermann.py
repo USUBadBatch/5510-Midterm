@@ -57,6 +57,9 @@ class Ackermann:
         "Calculates and returns the instantaneous turning radius"
         return velocity / self.calc_delta_theta(velocity, alpha)
 
+    def calc_alpha_for_inst_turning_raidus(self, radius: float) -> float:
+        return math.atan(self.__length / radius)
+
     def reset(self, x_pos: float = 0, y_pos: float = 0, theta: float = 0, alpha: float = 0) -> None:
         "Resets the skidsteers position"
         self.__x_pos = x_pos
@@ -120,4 +123,4 @@ class Ackermann:
         return (self.__x_pos, self.__y_pos, self.__theta, dt)
 
     def __repr__(self) -> str:
-        return f"Position: ({self.__x_pos, self.__y_pos}), Theta Dot: {self.__theta}"
+        return f"Position: {self.__x_pos, self.__y_pos}, Theta : {self.__theta}"
