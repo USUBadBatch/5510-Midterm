@@ -227,9 +227,9 @@ class CartPoleEnv(gym.Env):
             self.viewer.close()
             self.viewer = None
             
-register(
-    id='cartpole/CartPole-v0',
-    entry_point='cartpole.envs:CartPoleEnv',
-    max_episode_steps=300,
-)
+# register(
+#     id='cartpole/CartPole-v0',
+#     entry_point='cartpole.envs:CartPoleEnv',
+#     max_episode_steps=300,
+# )
             

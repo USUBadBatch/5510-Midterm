@@ -1,19 +1,19 @@
-from math import sqrt
 from Manipulator import Manipulator
+from math import sqrt
 
 def main():
     # Angles are measured in degrees
-    theta1 = -90
+    theta1 = 0
     theta4 = -90
     theta5 = 90
     theta6 = 40
 
     # distances are measured in meters
     d1 = .6
-    d2 = .5
-    d3 = 1
+    d2 = .2
+    d3 = .3
     d6 = .2
-
+    
     targ_x = 1.2
     targ_y = .8
     targ_z = .5
@@ -22,14 +22,16 @@ def main():
     starting_angles = (theta1, theta4, theta5, theta6)
 
     m = Manipulator(lengths=starting_lengths, angles=starting_angles)
-    iterations = m.moveTo(targ_x, targ_y, targ_z)
+    path = m.moveToShortest(1.2, .8, .5)
     end_lengths, end_angels = m.getDistancesAndAngels()
-    pos = m.getPos()
 
+    # for point in path:
+    #     print(f"\nx -> {point['x']}\ny -> {point['y']}\nz -> {point['z']}")
+    
     print(
 f"""
 
-The final angles and distances are as follows:
+The final angles and distances for the shortest traveled distance are as follows:
 
 DISTANCES:
     d1 is of length {end_lengths[0]}
@@ -44,13 +46,12 @@ ANGLES:
     theta 6 is {end_angels[3]} degrees
 
 FINAL POSITION:
-    x is {pos[0]}
-    y is {pos[1]}
-    z is {pos[2]}
+    x is {path[-1]['x']}
+    y is {path[-1]['y']}
+    z is {path[-1]['z']}
     
-Which is {sqrt((targ_x - pos[0])**2 + (targ_y - pos[1])**2 + (targ_z - pos[2])**2)} meters from the target.
+Which is {sqrt((targ_x - path[-1]['x'])**2 + (targ_y - path[-1]['y'])**2 + (targ_z - path[-1]['z'])**2)} meters from the target.
 
-Results were found in {iterations} Monte Carlo iterations
 """
 )
 
