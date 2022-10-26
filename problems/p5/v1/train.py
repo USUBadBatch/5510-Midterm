@@ -8,8 +8,8 @@ from agent import Agent
 
 writer = SummaryWriter()
 
-epochs = 50
-log_iter = 10
+epochs = 1000
+log_iter = 50
 
 env = gym.make("CartPole-v1", render_mode="human")
 
@@ -41,5 +41,5 @@ for i in range(epochs):
     
     learning.append(steps)
     if i % log_iter == 0:
-        print(f"Iteration: {i} | Moving-Average Steps: {np.mean(learning[-log_iter:]):.4f}")
+        print(f"Iteration: {i:3d} | Moving-Average Steps: {np.mean(learning[-log_iter:]):.4f}")
         
