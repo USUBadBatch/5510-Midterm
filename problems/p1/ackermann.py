@@ -106,6 +106,9 @@ class Ackermann:
 
     def get_width(self) -> float:
         return self.__width
+        
+    def get_pos(self) -> tuple[float, float]:
+        return self.__x_pos, self.__y_pos
 
     def calc_next_pos(self, velocity: float, alpha: float, dt: float):
         tmp = self.clone()
