@@ -2,3 +2,5 @@ matplotlib
 numpy
 gym
 torch
+fer
+opencv-python
