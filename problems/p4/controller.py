@@ -1,9 +1,6 @@
 import os
 import sys
 
-import math
-import gym
-
 # Sets the environment for the video driver based on the OS to render the environment graphic
 if sys.platform == 'win32':
 	os.environ['SDL_VIDEODRIVER'] = 'windib'
