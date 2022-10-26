@@ -1,4 +1,6 @@
-# How to run
-`python a.py` for part a  
-`python b.py` for part b  
-`python c.py` for part c
+# a
+* run `python a.py`
+# b
+* run `python b.py`
+# c
+* run `python c.py`
