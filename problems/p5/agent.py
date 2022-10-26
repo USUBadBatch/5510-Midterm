@@ -4,7 +4,11 @@ from model import PolicyNN
 class Agent(object):
     def __init__(self, env):
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        
+        PATH = 'problems/p5/policy_cnn'
         self.model = PolicyNN(env.observation_space.shape[0], env.action_space.n).to(self.device)
+        # self.model.load_state_dict(torch.load(PATH))
+        
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=3e-3)
         
     def act(self, state):
@@ -14,3 +18,4 @@ class Agent(object):
         action = cat_dist.sample()
         
         return action.item(), cat_dist.log_prob(action)
+    

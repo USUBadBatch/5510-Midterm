@@ -12,3 +12,4 @@ class PolicyNN(nn.Module):
         x = nn.functional.softmax(x, dim=1)     # get probabilities of output
         
         return x
+    

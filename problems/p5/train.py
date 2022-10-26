@@ -42,4 +42,7 @@ for i in range(epochs):
     learning.append(steps)
     if i % log_iter == 0:
         print(f"Iteration: {i:3d} | Moving-Average Steps: {np.mean(learning[-log_iter:]):.4f}")
+        writer.add_scalar('Steps/train', steps, i)
+        
+    # torch.save(agent.model.state_dict(), 'problems/p5/policy_cnn')
         
