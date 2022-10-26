@@ -7,7 +7,7 @@ from itertools import count
 import gym
 
 from model import DQN
-from cartpole import CartPoleEnv
+# from cartpole import CartPoleEnv
 import utils
 
 def optimize_model(memory, batch_size, transition, device, policy_net, target_net, gamma, optimizer):
@@ -42,7 +42,11 @@ def optimize_model(memory, batch_size, transition, device, policy_net, target_ne
 
 def main():
     # env = CartPoleEnv(cart_mass=4.0, pole_mass=0.2, pole_length=1.0)
-    env = gym.make('CartPole-v0').unwrapped
+    if gym.__version__ < '0.26':
+        env = gym.make('CartPole-v0', new_step_api=True, render_mode='single_rgb_array').unwrapped
+    else:
+        env = gym.make('CartPole-v0', render_mode='rgb_array').unwrapped
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     BATCH_SIZE = 128
