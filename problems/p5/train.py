@@ -4,6 +4,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 from collections import namedtuple
 from itertools import count
+import gym
 
 from model import DQN
 from cartpole import CartPoleEnv
@@ -40,7 +41,8 @@ def optimize_model(memory, batch_size, transition, device, policy_net, target_ne
     optimizer.step()
 
 def main():
-    env = CartPoleEnv(cart_mass=4.0, pole_mass=0.2, pole_length=1.0)
+    # env = CartPoleEnv(cart_mass=4.0, pole_mass=0.2, pole_length=1.0)
+    env = gym.make('CartPole-v0').unwrapped
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     BATCH_SIZE = 128

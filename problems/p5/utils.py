@@ -24,7 +24,7 @@ class ReplayMemory(object):
     def __len__(self):
         return len(self.memory)
     
-resize = torchvision.transforms.compose([torchvision.transforms.ToPILImage(),
+resize = torchvision.transforms.Compose([torchvision.transforms.ToPILImage(),
                                          torchvision.transforms.Resize(40, interpolation=Image.CUBIC),
                                          torchvision.transforms.ToTensor()])
 
