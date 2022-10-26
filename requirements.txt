@@ -4,3 +4,4 @@ gym
 torch
 fer
 opencv-python
+pandas
