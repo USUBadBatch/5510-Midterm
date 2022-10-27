@@ -1,5 +1,10 @@
+# Required Programs
+    1. Python>=3.8
+    2. Pip
+    3. git
+
 # How to navigate and run
-1. Make sure you have Python 3.6+ installed
+1. Make sure you have Python installed
 2. Make sure you have pip installed
 3. Install the required python packages
     * `pip install -r requirements.txt`

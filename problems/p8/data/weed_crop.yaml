@@ -1,0 +1,7 @@
+path: .
+train: train/
+test: test/
+
+names:
+  0: crop
+  1: weed
