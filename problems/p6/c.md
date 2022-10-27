@@ -1,3 +1,4 @@
 # What are the logical applications of this tool for an autonomous robot?  
-    
-# What are the ethical and legal consequences of fielding a system that makes deci-sions based on this tool?
+    This tool could be applied to any autonomous robot that has to interacted with humans. This could be from a system for the TSA that uses emotions as input for some screening model to a survival routine for a delivery robot in a sketchy place. If the robot interacts with humans at all, it could use emotion detection and use human emotions as input for its decision making.
+# What are the ethical and legal consequences of fielding a system that makes decisions based on this tool?
+    No computer or AI system is perfect. Any system that uses emotion detection and makes decision based on that will make a wrong decision at some point. This consequences of that for the victim could range from nothing happening to mental damage to physical harm. The backer or maintainer of such a system would have to ensure proper protocol are in place to deal with such occurances. They would be ethically responsible for the choices the system makes and legally if the victim decided to press charges/sue and a court found them in the right.
