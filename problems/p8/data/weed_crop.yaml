@@ -1,5 +1,6 @@
 path: .
 train: train/
+val: validation/
 test: test/
 
 names:
