@@ -1,0 +1,1 @@
+python yolov5\train.py --img 512 --batch 16 --epochs 5 --data data\weed_crop.yaml --weights yolov5s.pt
