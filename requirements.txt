@@ -5,3 +5,5 @@ torch
 fer
 opencv-python
 pandas
+tensorflow
+cuda-python
