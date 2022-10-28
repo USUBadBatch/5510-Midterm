@@ -5,7 +5,6 @@
 .7z
 bin/
 __pycache__/
-runs/
 problems/p6/output
 problems/p6/data.csv
 problems/p6/*.mp4
