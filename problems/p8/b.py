@@ -5,9 +5,9 @@ import os
 
 
 
-model = torch.hub.load("ultralytics/yolov5", "custom", path="data/runs/yolov5/weights/best.pt")
-images = os.listdir("data/test")
+model = torch.hub.load("ultralytics/yolov5", "custom", path="weedcrop-models/yolov5/weights/best.pt")
+images = os.listdir("dataset/test/images")
 
-results = model("D:\\Documents\\code\\school\\cs5510\\5510-Midterm\\problems\\p8\\data\\test\\images\\crop_1.jpeg")
 
-results.save()
+results = model([f"dataset/test/images/{image}" for image in images])
+results.save(save_dir="output/b-yolov5/", exist_ok=True)
