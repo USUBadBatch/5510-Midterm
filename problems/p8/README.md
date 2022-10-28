@@ -1,3 +1,3 @@
 1. `git submodule init`
 2. `git submodule update`
-3. `pip install -r yolov5/requirements.txt`
+3. `pip install -r algorithms/yolov5/requirements.txt`

@@ -1,1 +1,1 @@
-python algorithms\yolov5\train.py --img 512 --batch 16 --epochs 5 --data dataset\weed_crop.yaml --weights yolov5s.pt --workers 3 --project weedcrop-models --name yolov5
+python algorithms\yolov5\train.py --img 512 --batch 16 --epochs 5 --data dataset\weed_crop.yaml --weights yolov5s.pt --workers 2 --project weedcrop-models --name yolov5
