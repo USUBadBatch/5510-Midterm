@@ -1,6 +1,6 @@
 # Required Programs
-    1. Python>=3.8
-    2. Pip
+    1. python<=3.10.8,>=3.8
+    2. pip
     3. git
 
 # How to navigate and run
