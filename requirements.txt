@@ -5,6 +5,11 @@ fer
 opencv-python
 pandas
 tensorflow
+pyyaml
+IPython
+scipy
+psutil
+thop
 
 --extra-index-url https://download.pytorch.org/whl/cu116
 torch
