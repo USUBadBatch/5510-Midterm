@@ -45,5 +45,5 @@ for i in range(epochs):
         print(f"Iteration: {i:3d} | Moving-Average Steps: {np.mean(learning[-log_iter:]):.4f}")
         writer.add_scalar('Steps/train', steps, i)
     if steps > best_steps:  
-        torch.save(agent.model.state_dict(), 'problems/p5/policy_cnn')
+        torch.save(agent.model.state_dict(), 'problems/p5/policy_cnn.pt')
         

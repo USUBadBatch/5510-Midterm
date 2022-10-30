@@ -6,7 +6,7 @@ class Agent(object):
     def __init__(self, env):
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         
-        PATH = 'problems/p5/policy_cnn'
+        PATH = 'problems/p5/policy_cnn.pt'
         self.model = PolicyNN(env.observation_space.shape[0]).to(self.device)
         if exists(PATH):
             self.model.load_state_dict(torch.load(PATH))
