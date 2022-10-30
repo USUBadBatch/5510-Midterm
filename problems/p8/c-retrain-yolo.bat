@@ -1,0 +1,1 @@
+python algorithms\yolov5\train.py --img 512 --batch 16 --epochs 10 --cache ram --data dataset\weed_crop.yaml --weights yolov5s.pt --workers 1 --project weedcrop-models --name yolov5-retrain --exist-ok

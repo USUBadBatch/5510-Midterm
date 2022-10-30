@@ -1,7 +1,18 @@
 matplotlib
 numpy
 gym
-torch
 fer
 opencv-python
 pandas
+tensorflow
+pyyaml
+IPython
+scipy
+psutil
+thop
+pygame
+
+--extra-index-url https://download.pytorch.org/whl/cu116
+torch
+torchvision 
+torchaudio 
