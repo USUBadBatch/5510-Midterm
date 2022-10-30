@@ -1,7 +1,7 @@
 from torch import nn
 
 class PolicyNN(nn.Module):
-    def __init__(self, observation_space, action_space):
+    def __init__(self, observation_space):
         super(PolicyNN, self).__init__()
         self.layer1 = nn.Linear(observation_space, 16)
         self.layer2 = nn.Linear(16, 2)
