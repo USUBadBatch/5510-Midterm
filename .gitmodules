@@ -1,6 +1,0 @@
-[submodule "problems/p8/algorithms/yolov5"]
-	path = problems/p8/algorithms/yolov5
-	url = https://github.com/ultralytics/yolov5
-[submodule "problems/p8/algorithms/Keras-frcnn"]
-	path = problems/p8/algorithms/Keras-frcnn
-	url = https://github.com/kbardool/Keras-frcnn.git
