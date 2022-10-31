@@ -16,3 +16,4 @@ pygame
 torch
 torchvision 
 torchaudio 
+tensorboard
