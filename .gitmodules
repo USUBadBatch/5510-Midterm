@@ -1,3 +1,0 @@
-[submodule "problems/p8/algorithms/yolov5"]
-	path = problems/p8/algorithms/yolov5
-	url = https://github.com/ultralytics/yolov5
