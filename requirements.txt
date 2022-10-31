@@ -11,6 +11,9 @@ scipy
 psutil
 thop
 pygame
+keras
+sklearn
+h5py
 
 --extra-index-url https://download.pytorch.org/whl/cu116
 torch
