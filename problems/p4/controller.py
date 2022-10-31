@@ -13,7 +13,7 @@ class CartPoleController():
         self.__observation, _ = self.__env.reset()
         
     def __get_action(self):
-        return 0 if self.__observation[1] > 0 else 1
+        return 0 if self.__observation[1] < 0 else 1
     
     def next_step(self):
         self.__observation, _, terminated, truncated, _ = self.__env.step(self.__get_action())
