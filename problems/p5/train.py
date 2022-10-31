@@ -8,12 +8,12 @@ from agent import Agent
 
 writer = SummaryWriter()
 
-epochs = 800
-log_iter = 50
+epochs = 200
+log_iter = 25
 
 env = gym.make("CartPole-v1", render_mode="human")
 
-agent = Agent(env)
+agent = Agent(env, load_exist=False)
 learning = []
 best_steps = 0
 
@@ -44,6 +44,8 @@ for i in range(epochs):
     if i % log_iter == 0:
         print(f"Iteration: {i:3d} | Moving-Average Steps: {np.mean(learning[-log_iter:]):.4f}")
         writer.add_scalar('Steps/train', steps, i)
-    if steps > best_steps:  
+        
+    if steps > best_steps and agent.load_exist:  
         torch.save(agent.model.state_dict(), 'problems/p5/policy_cnn.pt')
         
+env.close()
