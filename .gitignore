@@ -12,3 +12,4 @@ problems/p6/*.mp4
 !problems/p6/Video_Two.mp4
 *.cache
 *.npy
+runs/
