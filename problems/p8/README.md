@@ -1,4 +1,4 @@
-# To run the problem with the pretrained (pretrained and untrained -> prepretrained/pretrained) models
+# To run the problem with our pretrained models for the pretrained(c) and untrained(a,b) problems aka prepretrained/pretrained models
 1. `python a.py`
 2. `python b.py`
 3. `python c.py`
@@ -14,5 +14,8 @@
     3. `python c.py`
 
 # Output
-* Output classified images are in `output/<problem letter>-<algorithm name>-<model context>`
-* The 10 original images are in `dataset/test/images`
+* For b and c
+    * Output classified images are in `output/<problem letter>-<algorithm name>-<model context>`
+    * The 10 original images are in `dataset/test/images`
+* For a
+    * The image classes are displayed in the output of `python a.py`
