@@ -1,3 +1,5 @@
+# Initialization
+* run `pip install -r algorithms/yolov5/requirements.txt`
 # To run the problem with the pretrained (pretrained and untrained -> prepretrained/pretrained) models
 1. `python a.py`
 2. `python b.py`
