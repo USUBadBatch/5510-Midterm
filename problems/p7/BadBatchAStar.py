@@ -13,7 +13,47 @@ import math
 
 import matplotlib.pyplot as plt
 
-show_animation = True
+show_animation = False
+
+
+class AStarQueue:
+    def __init__(self):
+        self.__queue = []
+        self.__idx = 0
+
+    def enqueue(self, element):
+        idx = len(self.__queue)
+        for i, el in enumerate(self.__queue):
+            if element < el:
+                idx = i
+                break
+
+        self.__queue.insert(idx, element)
+
+    def dequeue(self):
+        return self.__queue.pop(0)
+
+    def bounty_hunter(self, target_id):
+        for el in self.__queue:
+            if target_id == el:
+                return el
+
+        return None
+
+    def __len__(self):
+        return len(self.__queue)
+
+    def __next__(self):
+        if self.__idx >= len(self.__queue):
+            self.__idx = 0
+            raise StopIteration
+        else: 
+            el = self.__queue[self.__idx]
+            self.__idx += 1
+            return el
+
+    def __iter__(self):
+        return self
 
 
 class AStarPlanner:
@@ -38,52 +78,51 @@ class AStarPlanner:
         self.calc_obstacle_map(ox, oy)
 
     class Node:
-        def __init__(self, x, y, cost, parent_index):
+        def __init__(self, x, y, cost, dist, parent):
             self.x = x  # index of grid
             self.y = y  # index of grid
             self.cost = cost
-            self.parent_index = parent_index
+            self.parent = parent
+            self.dist = dist
 
         def __str__(self):
             return str(self.x) + "," + str(self.y) + "," + str(
                 self.cost) + "," + str(self.parent_index)
 
+        def __lt__(self, other):
+            return self.cost + self.dist < other.cost + other.dist
+
+        def __eq__(self, other):
+            if type(other) == int: return True
+            return self.x == other.x and self.y == other.y
+
     def planning(self, sx, sy, gx, gy):
         """
         A star path search
-
-        input:
-            s_x: start x position [m]
-            s_y: start y position [m]
-            gx: goal x position [m]
-            gy: goal y position [m]
-
-        output:
-            rx: x position list of the final path
-            ry: y position list of the final path
         """
 
-        start_node = self.Node(self.calc_xy_index(sx, self.min_x),
-                               self.calc_xy_index(sy, self.min_y), 0.0, -1)
         goal_node = self.Node(self.calc_xy_index(gx, self.min_x),
-                              self.calc_xy_index(gy, self.min_y), 0.0, -1)
+                               self.calc_xy_index(gy, self.min_y), 
+                               0.0,
+                               0,
+                               -1)
+                               
+        start_node = self.Node(self.calc_xy_index(sx, self.min_x),
+                               self.calc_xy_index(sy, self.min_y), 
+                               0.0,
+                               self.distToFinal(self.calc_xy_index(sx, self.min_x), self.calc_xy_index(sy, self.min_y), goal_node),
+                               -1)
 
-        open_set, closed_set = dict(), dict()
-        open_set[self.calc_grid_index(start_node)] = start_node
+        open_set, closed_set = AStarQueue(), []
+        open_set.enqueue(start_node)
 
         while 1:
             if len(open_set) == 0:
                 print("Open set is empty..")
                 break
 
-            c_id = min(
-                open_set,
-                key=lambda o: open_set[o].cost + self.calc_heuristic(goal_node,
-                                                                     open_set[
-                                                                         o]))
-            current = open_set[c_id]
+            current = open_set.dequeue()
 
-            # show graph
             if show_animation:  # pragma: no cover
                 plt.plot(self.calc_grid_position(current.x, self.min_x),
                          self.calc_grid_position(current.y, self.min_y), "xc")
@@ -91,63 +130,63 @@ class AStarPlanner:
                 plt.gcf().canvas.mpl_connect('key_release_event',
                                              lambda event: [exit(
                                                  0) if event.key == 'escape' else None])
-                if len(closed_set.keys()) % 10 == 0:
+                if len(closed_set) % 10 == 0:
                     plt.pause(0.001)
 
-            if current.x == goal_node.x and current.y == goal_node.y:
-                print("Find goal")
-                goal_node.parent_index = current.parent_index
+            if current == goal_node:
+                print("Found goal")
+                goal_node.parent = current.parent
                 goal_node.cost = current.cost
                 break
 
-            # Remove the item from the open set
-            del open_set[c_id]
-
             # Add it to the closed set
-            closed_set[c_id] = current
+            closed_set.append(current)
 
             # expand_grid search grid based on motion model
             for i, _ in enumerate(self.motion):
-                node = self.Node(current.x + self.motion[i][0],
-                                 current.y + self.motion[i][1],
-                                 current.cost + self.motion[i][2], c_id)
-                n_id = self.calc_grid_index(node)
+                temp_x = current.x + self.motion[i][0]
+                temp_y = current.y + self.motion[i][1]
+                node = self.Node(temp_x,
+                                 temp_y,
+                                 current.cost + self.motion[i][2],
+                                 self.distToFinal(temp_x, temp_y, goal_node), 
+                                 current)
 
                 # If the node is not safe, do nothing
                 if not self.verify_node(node):
                     continue
 
-                if n_id in closed_set:
+                if node in closed_set:
                     continue
 
-                if n_id not in open_set:
-                    open_set[n_id] = node  # discovered a new node
+                if node not in open_set:
+                    open_set.enqueue(node) # discovered a new node
                 else:
-                    if open_set[n_id].cost > node.cost:
+                    if node < open_set.bounty_hunter(node):
                         # This path is the best until now. record it
-                        open_set[n_id] = node
+                        open_set.bounty_hunter(node).cost = node.cost
+                        open_set.bounty_hunter(node).parent = node.parent
 
-        rx, ry = self.calc_final_path(goal_node, closed_set)
+        rx, ry = self.calc_final_path(start_node, goal_node)
 
         return rx, ry
 
-    def calc_final_path(self, goal_node, closed_set):
+    def calc_final_path(self, start_node, goal_node):
         # generate final course
         rx, ry = [self.calc_grid_position(goal_node.x, self.min_x)], [
             self.calc_grid_position(goal_node.y, self.min_y)]
-        parent_index = goal_node.parent_index
-        while parent_index != -1:
-            n = closed_set[parent_index]
+        n = goal_node.parent
+        while not (n.x == start_node.x and n.y == start_node.y) :
             rx.append(self.calc_grid_position(n.x, self.min_x))
             ry.append(self.calc_grid_position(n.y, self.min_y))
-            parent_index = n.parent_index
+            n = n.parent
 
         return rx, ry
 
     @staticmethod
-    def calc_heuristic(n1, n2):
-        w = 1.0  # weight of heuristic
-        d = w * math.hypot(n1.x - n2.x, n1.y - n2.y)
+    def distToFinal(node_x, node_y, goal):
+        w = 1.2  # weight of heuristic
+        d = w * math.hypot((goal.x - node_x), (goal.y - node_y))
         return d
 
     def calc_grid_position(self, index, min_position):
