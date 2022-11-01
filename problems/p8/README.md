@@ -16,5 +16,8 @@
     3. `python c.py`
 
 # Output
-* Output classified images are in `output/<problem letter>-<algorithm name>-<model context>`
-* The 10 original images are in `dataset/test/images`
+* For b and c
+    * Output classified images are in `output/<problem letter>-<algorithm name>-<model context>`
+    * The 10 original images are in `dataset/test/images`
+* For a
+    * The image classes are displayed in the output of `python a.py`

@@ -19,4 +19,4 @@ class CartPoleController():
         self.__observation, _, terminated, truncated, _ = self.__env.step(self.__get_action())
         
         if terminated or truncated:
-            self.__observation, _ = self.__env.reset()
+            return True
