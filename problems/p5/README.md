@@ -1,13 +1,11 @@
-# Initialize Problem
-
-If you haven't already, run `pip install -r requirements.txt`.
-
 # Running the Problem
-1. Training your own model
-   * Run `python problems/p5/train.py` to train a model for 200 epochs
-      * Note that this does not save the model. It is only for demostration
-2. The entire solution set for the problem is contained within the `problems/p5/solution.ipynb` notebook.
-   * `problems/p5/solution.ipynb` runs 1 epoch of the pretrained model `policy_cnn.pt` to demonstrate the reinforcement learning model's success
+## To run with the pretrained model
+* Run the notebook `problems/p5/solution.ipynb`
+## To train your own model
+* Run `python problems/p5/train.py` to train a model for 200 epochs
+   * Note that this does not save the model. It is only for demostration
+* Run the notebook `problems/p5/solution.ipynb`
+
 
 # Output
 
