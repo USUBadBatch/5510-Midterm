@@ -1,0 +1,8 @@
+path: ../data/
+train: train/
+val: validation/
+test: test/
+
+names:
+  0: crop
+  1: weed
