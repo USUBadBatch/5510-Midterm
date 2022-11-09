@@ -2,6 +2,7 @@
 
 import torch
 import os
+from termcolor import colored
 
 
 
@@ -19,3 +20,6 @@ images = os.listdir("dataset/test/images")
 
 results = model([f"dataset/test/images/{image}" for image in images])
 results.save(save_dir="output/c-yolov5-retrain/last/", exist_ok=True)
+
+print(colored("Output Images for the retrained yolov5 model are in ", "green"), end="")
+print(colored("output/c-yolov5-retrain/best/", "blue"))
