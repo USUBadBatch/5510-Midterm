@@ -1,0 +1,15 @@
+.vs/
+.vscode/
+.zip
+.rar
+.7z
+bin/
+__pycache__/
+problems/p6/output
+problems/p6/data.csv
+problems/p6/*.mp4
+!problems/p6/Video_One.mp4
+!problems/p6/Video_Two.mp4
+*.cache
+*.npy
+runs/

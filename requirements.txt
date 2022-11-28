@@ -1,0 +1,25 @@
+keras
+matplotlib
+numpy
+gym
+opencv-python
+pandas
+tensorflow-gpu
+tensorflow
+pyyaml
+IPython
+scipy
+psutil
+thop
+pygame
+sklearn
+h5py
+fer
+termcolor
+ipykernel
+
+--extra-index-url https://download.pytorch.org/whl/cu116
+torch
+torchvision 
+torchaudio 
+tensorboard
